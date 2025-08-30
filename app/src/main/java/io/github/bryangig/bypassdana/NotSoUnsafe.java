@@ -115,10 +115,11 @@ public class NotSoUnsafe implements IXposedHookLoadPackage {
                                 XposedBridge.log(TAG + ": Intercepted an Intent with 'unsafe_status'. Value: " + unsafeStatus);
                                 XposedBridge.log(TAG + ": Removing 'unsafe_status' extra to prevent warning screen.");
                                 
-                                // The ADVANCED FIX: Remove the key instead of blocking the whole Intent
-                                bundle.remove("unsafe_status");
+                                // THE ADVANCED FIX v2: Replace the value instead of removing the key.
+                                // This might satisfy the app's workflow better.
+                                bundle.putString("unsafe_status", ""); // Try with an empty string
                                 
-                                XposedBridge.log(TAG + ": Bypass successful. Allowing modified Intent to proceed.");
+                                XposedBridge.log(TAG + ": Bypass successful. Replaced 'unsafe_status' with empty string.");
                             }
                         }
                     }
